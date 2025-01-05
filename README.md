@@ -40,3 +40,9 @@ make build
 ```console
 gh repo create --public backup-home
 ```
+
+## Reasoning
+
+Wanted to make that all work in rust, but as it appears there's no lib for
+rclone, there's librclone, which you cna use to embed into rust binary. Still I
+did not want to make things that complex.
