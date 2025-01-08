@@ -10,7 +10,7 @@ else
     RCLONE_PATH ?= Machines/$(shell hostname)/$(shell basename $(shell dirname $(HOME)))/$(shell whoami)
 endif
 
-.PHONY: build build-release test clean run preview
+.PHONY: build build-release test clean run preview run-debug
 
 # Default target
 all: build
@@ -62,3 +62,9 @@ preview: build
 		--source $(HOME) \
 		--destination "$(RCLONE_REMOTE):$(RCLONE_PATH)" \
 		--preview
+
+# Run with debug logging
+run-debug: build
+	RUST_LOG=debug ./target/debug/backup-home \
+		--source $(HOME) \
+		--destination "$(RCLONE_REMOTE):$(RCLONE_PATH)" \

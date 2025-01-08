@@ -29,6 +29,7 @@
             buildInputs = [
               rust
               rust-analyzer
+              cmake
             ];
 
             shellHook = ''

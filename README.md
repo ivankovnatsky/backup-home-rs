@@ -23,22 +23,25 @@ make build
 
 ## TODO
 
-- [ ] Command-line argument parsing with clap
 - [ ] Implement the archive creation functions (zip and tar.gz)
 - [ ] Add more detailed exclude patterns for each platform
-- [ ] Add progress reporting
 - [ ] Implement proper error handling for various failure scenarios
 - [ ] Add retry logic for interrupted operations
 - [ ] Add tests
 - [ ] Add CI/CD to build all platforms binaries
 - [ ] Replace use of banaries with libs
-  - [ ] https://github.com/trevyn/librclone
-  - [ ] Replace 7z, tar, pigz with libs
+  - [x] https://github.com/trevyn/librclone
+    - [ ] Add progress to uploading
+    - [x] macOS
+    - [ ] Linux
+    - [ ] Windows support
+      - [ ] Replace 7z
 
 ## Configure project
 
 ```console
 gh repo create --public backup-home
+direnv allow
 ```
 
 ## Reasoning
