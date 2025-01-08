@@ -6,6 +6,8 @@ use tracing::info;
 mod macos;
 #[cfg(target_os = "windows")]
 mod windows;
+#[cfg(target_os = "linux")]
+mod linux;
 
 const DEFAULT_COMPRESSION_LEVEL: u32 = 6;
 
@@ -28,11 +30,14 @@ pub fn create_backup(source: &str, compression_level: Option<u32>) -> Result<Str
     info!("Backup file: {}", backup_path.display());
     info!("Using compression level: {}", compression);
 
+    #[cfg(target_os = "windows")]
+    windows::create_archive(source, &backup_path, compression)?;
+
     #[cfg(target_os = "macos")]
     macos::create_archive(source, &backup_path, compression)?;
 
-    #[cfg(target_os = "windows")]
-    windows::create_archive(source, &backup_path, compression)?;
+    #[cfg(target_os = "linux")]
+    linux::create_archive(source, &backup_path, compression)?;
 
     Ok(backup_path.to_string_lossy().to_string())
 }
