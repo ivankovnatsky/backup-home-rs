@@ -1,6 +1,7 @@
 pub fn get_macos_excludes() -> Vec<String> {
     vec![
         "./**/*.sock".to_string(),
+        "./**/.build".to_string(),
         "./**/.venv".to_string(),
         "./**/__worktrees".to_string(),
         "./**/node_modules".to_string(),
