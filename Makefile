@@ -50,12 +50,6 @@ lint:
 # Run all checks (format, lint, test)
 check: fmt-check lint test
 
-# Run the program with all CLI options
-run: build
-	./target/debug/backup-home \
-		--source $(HOME) \
-		--destination "$(RCLONE_REMOTE):$(RCLONE_PATH)" \
-
 # Preview what would be done without actually doing it
 preview: build
 	./target/debug/backup-home \
@@ -63,8 +57,20 @@ preview: build
 		--destination "$(RCLONE_REMOTE):$(RCLONE_PATH)" \
 		--preview
 
+# Run the program with all CLI options
+run: build
+	./target/debug/backup-home \
+		--source $(HOME) \
+		--destination "$(RCLONE_REMOTE):$(RCLONE_PATH)" \
+
+# Run the program with release build
+run-release: build-release
+	./target/release/backup-home \
+		--source $(HOME) \
+		--destination "$(RCLONE_REMOTE):$(RCLONE_PATH)" \
+
 # Run with debug logging
-run-verbose: build
+run-debug: build
 	RUST_LOG=debug ./target/debug/backup-home \
 		--source $(HOME) \
 		--destination "$(RCLONE_REMOTE):$(RCLONE_PATH)" \
