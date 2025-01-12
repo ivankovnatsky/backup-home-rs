@@ -6,6 +6,7 @@ pub fn get_macos_excludes() -> Vec<String> {
         "./**/__worktrees".to_string(),
         "./**/node_modules".to_string(),
         "./**/target".to_string(),
+        "./**/venv".to_string(),
         "./.Trash".to_string(),
         "./.cache/huggingface".to_string(),
         "./.cache/nix".to_string(),
