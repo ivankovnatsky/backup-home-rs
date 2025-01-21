@@ -22,14 +22,49 @@
             extensions = [ "rust-src" "clippy" "rustfmt" ];
           };
 
+          # Define the package
+          backup-home = pkgs.rustPlatform.buildRustPackage {
+            pname = "backup-home";
+            version = "0.1.0";
+            src = ./.;
+
+            cargoLock = {
+              lockFile = ./Cargo.lock;
+            };
+
+            nativeBuildInputs = [ 
+              pkgs.cmake 
+              pkgs.go
+            ];
+            
+            buildInputs = [ pkgs.openssl.dev ];
+
+            preBuildPhases = ["goPathSetup"];
+            goPathSetup = ''
+              export GOCACHE=$TMPDIR/go-cache
+              export GOPATH=$TMPDIR/go
+              mkdir -p $GOCACHE $GOPATH
+            '';
+
+            meta = with pkgs.lib; {
+              description = "A tool for creating and uploading backups of user directories";
+              homepage = "https://github.com/ivankovnatsky/backup-home";
+              license = licenses.mit; # Adjust according to your license
+            };
+          };
+
         in
-        with pkgs;
         {
-          devShells.default = mkShell {
+          # Expose the package
+          packages.default = backup-home;
+          packages.backup-home = backup-home;
+
+          # Keep the development shell
+          devShells.default = pkgs.mkShell {
             buildInputs = [
               rust
-              rust-analyzer
-              cmake
+              pkgs.rust-analyzer
+              pkgs.cmake
             ];
 
             shellHook = ''
